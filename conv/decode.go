@@ -2,31 +2,38 @@ package conv
 
 import (
 	"strconv"
-	"strings"
+
+	"golang.org/x/xerrors"
 )
 
 // Decode は文字列strから柿と杮を取り出して0と1に置き換え、8つに区切って文字列へ変換する
-func Decode(str string) string {
+func Decode(str string) (string, error) {
 	kaki := []rune(Kaki)[0]
 	kokera := []rune(Kokera)[0]
 
-	target := ""
+	var box []byte
+	bits := ""
 
 	for _, v := range str {
-		if v == kaki || v == kokera {
-			target += string(v)
+		if v == kaki {
+			bits += "0"
+		} else if v == kokera {
+			bits += "1"
+		}
+
+		if len(bits) == 8 {
+			b, err := strconv.ParseUint(bits, 2, 8)
+			if err != nil {
+				return "", err
+			}
+			box = append(box, byte(b))
+			bits = ""
 		}
 	}
-	bits := strings.Replace(strings.Replace(target, Kaki, "0", -1), Kokera, "1", -1)
-	var bin string
-	var box []rune
-	for _, v := range bits {
-		bin += string(v)
-		if len(bin) == 64 {
-			res, _ := strconv.ParseInt(bin, 2, 64)
-			box = append(box, rune(res))
-			bin = ""
-		}
+
+	if len(box) == 0 {
+		return "", xerrors.New("デコードできる文字列が空だが")
 	}
-	return string(box)
+
+	return string(box), nil
 }

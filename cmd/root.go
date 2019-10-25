@@ -27,6 +27,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/xztaityozx/kakikokera/conv"
 )
@@ -55,7 +56,12 @@ var rootCmd = &cobra.Command{
 			fn = conv.Decode
 		}
 
-		fmt.Println(fn(str))
+		result, err := fn(str)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+
+		fmt.Println(result)
 	},
 }
 
