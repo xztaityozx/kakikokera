@@ -23,3 +23,8 @@ func TestEncode(t *testing.T) {
 		as.Equal(v.expect, res)
 	}
 }
+
+func TestEncodeError(t *testing.T) {
+	_, err := Encode("")
+	assert.Error(t, err)
+}

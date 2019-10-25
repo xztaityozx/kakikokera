@@ -21,3 +21,14 @@ func TestDecode(t *testing.T) {
 		as.Equal(v.expect, res)
 	}
 }
+
+func TestDecodeError(t *testing.T) {
+	data := []string{
+		"000", "柿", "こけら", "柿杮杮柿柿柿柿",
+	}
+
+	for _, v := range data {
+		_, err := Decode(v)
+		assert.Error(t, err)
+	}
+}

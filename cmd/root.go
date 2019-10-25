@@ -35,8 +35,10 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "kakikokera",
-	Short: "",
-	Long:  ``,
+	Short: "これは柿か。それとも杮か。",
+	Long: `文字列を柿と杮でエンコードします。デコードもできます
+
+Repo: xztaityozx/kakikokera`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		str := strings.Join(args, " ")
