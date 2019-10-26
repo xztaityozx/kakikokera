@@ -24,10 +24,10 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/xztaityozx/kakikokera/conv"
 )
@@ -60,7 +60,7 @@ Repo: xztaityozx/kakikokera`,
 
 		result, err := fn(str)
 		if err != nil {
-			logrus.Fatal(err)
+			log.Fatalln(err)
 		}
 
 		fmt.Println(result)
