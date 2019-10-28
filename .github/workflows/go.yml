@@ -2,9 +2,12 @@ name: Go
 on: [push]
 jobs:
 
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+  test:
+    name: test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
 
     - name: Set up Go 1.13
